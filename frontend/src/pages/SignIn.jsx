@@ -28,24 +28,22 @@ export default function SignIn() {
       });
 
       if (!res.ok) {
-        // Handle server errors
         if (res.status === 401) {
           throw new Error("Invalid email or password");
+        } else if (res.status === 404) {
+          throw new Error("User not found");
         }
         throw new Error("Failed to sign in");
       }
 
       const data = await res.json();
-      console.log(data);
       setLoading(false);
       setError(null);
       navigate("/");
     } catch (error) {
-      // Handle network errors
       if (error.message === "Failed to fetch") {
         setError("Network error. Please check your internet connection");
       } else {
-        // Handle other errors
         setError(error.message);
       }
       setLoading(false);
@@ -57,20 +55,23 @@ export default function SignIn() {
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          type="text"
-          placeholder="email"
+          type="email"
+          placeholder="Email"
           className="border p-3 rounded-lg"
           id="email"
           onChange={handleChange}
+          required
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           className="border p-3 rounded-lg"
           id="password"
           onChange={handleChange}
+          required
         />
         <button
+          type="submit"
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
