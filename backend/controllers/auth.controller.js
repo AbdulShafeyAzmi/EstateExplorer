@@ -10,7 +10,7 @@ export const handleSignup = async (req, res, next) => {
 
   try {
     await newUser.save();
-    res.status(201).json({ msg: "User created succesfully" });
+    res.status(201).json("User created succesfully");
   } catch (error) {
     next(error);
   }
