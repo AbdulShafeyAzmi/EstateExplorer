@@ -7,7 +7,7 @@ export default function SignUp() {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,29 +16,29 @@ export default function SignUp() {
       ...formData,
       [e.target.id]: e.target.value,
     });
-    setErrors({ ...errors, [e.target.id]: null });
+    //setErrors({ ...errors, [e.target.id]: null });
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.username.trim()) {
-      newErrors.username = "Username is required";
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email address";
-    }
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  // const validateForm = () => {
+  //   const newErrors = {};
+  //   if (!formData.username.trim()) {
+  //     newErrors.username = "Username is required";
+  //   }
+  //   if (!formData.email.trim()) {
+  //     newErrors.email = "Email is required";
+  //   } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+  //     newErrors.email = "Invalid email address";
+  //   }
+  //   if (!formData.password.trim()) {
+  //     newErrors.password = "Password is required";
+  //   }
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    // if (!validateForm()) return;
 
     setLoading(true);
     try {
@@ -50,17 +50,23 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to sign up");
-      }
+      // if (!res.ok) {
+      //   throw new Error("Failed to sign up");
+      // }
 
       const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        setError(data.message);
+        setLoading(false);
+        return;
+      }
       console.log(data);
       setLoading(false);
       navigate("/sign-in");
     } catch (error) {
       setLoading(false);
-      setErrors({ general: error.message });
+      setError(error.message);
     }
   };
 
@@ -75,7 +81,7 @@ export default function SignUp() {
           id="username"
           onChange={handleChange}
         />
-        {errors.username && <p className="text-red-500">{errors.username}</p>}
+        {/* {errors.username && <p className="text-red-500">{errors.username}</p>} */}
 
         <input
           type="text"
@@ -84,7 +90,7 @@ export default function SignUp() {
           id="email"
           onChange={handleChange}
         />
-        {errors.email && <p className="text-red-500">{errors.email}</p>}
+        {/* {errors.email && <p className="text-red-500">{errors.email}</p>} */}
 
         <input
           type="password"
@@ -93,7 +99,7 @@ export default function SignUp() {
           id="password"
           onChange={handleChange}
         />
-        {errors.password && <p className="text-red-500">{errors.password}</p>}
+        {/* {errors.password && <p className="text-red-500">{errors.password}</p>} */}
 
         <button
           disabled={loading}
@@ -110,7 +116,7 @@ export default function SignUp() {
         </Link>
       </div>
 
-      {errors.general && <p className="text-red-500 mt-5">{errors.general}</p>}
+      {error !== null && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }

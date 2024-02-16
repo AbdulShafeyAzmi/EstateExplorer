@@ -27,25 +27,20 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) {
-        if (res.status === 401) {
-          throw new Error("Invalid email or password");
-        } else if (res.status === 404) {
-          throw new Error("User not found");
-        }
-        throw new Error("Failed to sign in");
-      }
-
       const data = await res.json();
+
+      console.log(data);
+      if (data.success === false) {
+        console.log(data.message);
+        setError(data.message);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
       setError(null);
       navigate("/");
     } catch (error) {
-      if (error.message === "Failed to fetch") {
-        setError("Network error. Please check your internet connection");
-      } else {
-        setError(error.message);
-      }
+      setError(error.message);
       setLoading(false);
     }
   };
@@ -84,7 +79,7 @@ export default function SignIn() {
           <span className="text-blue-700">Sign up</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {error !== null && <p className="text-red-700">{error}</p>}
     </div>
   );
 }
