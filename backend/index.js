@@ -10,7 +10,7 @@ mongoose
   .connect(process.env.MONGO)
   .then(() => console.log("db connecred..."))
   .catch((err) => {
-    console.log(err.message);
+    console.log("mongo" + err.message);
   });
 
 app.use(express.json());
