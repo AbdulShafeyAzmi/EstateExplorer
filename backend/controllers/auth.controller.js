@@ -60,3 +60,12 @@ export const handleGoogle = async (req, res, next) => {
     next(error);
   }
 };
+
+export const handleSignout = (req, res, next) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ message: "User has been logged out" });
+  } catch (error) {
+    next(error);
+  }
+};
