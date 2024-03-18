@@ -64,6 +64,7 @@ export default function UpdateListing() {
           setUploading(false);
         })
         .catch((err) => {
+          console.log(err);
           setImageUploadError("Image upload failed (2 mb max per image)");
           setUploading(false);
         });
@@ -152,7 +153,7 @@ export default function UpdateListing() {
         }),
       });
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
