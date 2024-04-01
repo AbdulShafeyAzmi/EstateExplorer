@@ -297,7 +297,7 @@ export default function UpdateListing() {
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
-                <span className="text-sm">(&#8377; / month) </span>
+                <span className="text-sm">(&#8377; / night) </span>
               </div>
             </div>
             {formData.offer && (
@@ -315,7 +315,7 @@ export default function UpdateListing() {
 
                 <div className="flex flex-col items-center">
                   <p>Discounted price</p>
-                  <span className="text-sm">(&#8377; / month) </span>
+                  <span className="text-sm">(&#8377; / night) </span>
                 </div>
               </div>
             )}
