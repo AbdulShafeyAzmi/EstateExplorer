@@ -12,8 +12,8 @@ export default function Home() {
   const [rentListings, setRentListings] = useState([]);
   SwiperCore.use({ Navigation });
 
-  console.log(saleListings);
-  console.log(offerListings);
+  // console.log(saleListings);
+  // console.log(offerListings);
 
   useEffect(() => {
     const fetchOfferListings = async () => {

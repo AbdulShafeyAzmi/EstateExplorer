@@ -33,6 +33,7 @@ export default function Profile() {
   const fileRef = useRef(null);
 
   // console.log(formData);
+  // console.log(currentUser.avatar);
 
   useEffect(() => {
     if (file) {
